@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crossword Puzzle | The Interactive Map</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Main Stylesheet -->
+	<link rel="stylesheet" href="css/style.css" />
+
+	<!-- Fontawesome Css -->
+	<link rel="stylesheet" href="css/font-awesome.css" />
+
+	<!-- Jquery Library -->
+	<script type="text/javascript" src="js/jquery.js"></script>
+</head>
+<body>
+
+
+
+<div class="gamestrtng-play">
+
+	<!-- Start - Menu Wrapper -->
+	<div class="menu-wrapper">
+		<div class="menu-trggr"><span></span></div>
+		<div class="menu-frp">
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="screen2.html">Instructions</a></li>
+			</ul>
+		</div>
+	</div>
+	<!-- End - Menu Wrapper -->
+
+
+	<div class="screen" id="game">
+
+		<!-- Start - Crossword Puzzle Board -->
+		<div id="ttscontainer">
+			<div id="crossword"></div>
+		</div>
+		<!-- End - Crossword Puzzle Board -->
+
+		<button class="btn" id="clearAll">Clear All</button>
+		<button class="btn" id="clearError">Clear Errors</button>
+		<button class="btn" id="submitBtn">Submit</button>
+
+
+		<!-- Start - Clues Group -->
+		<div class="clues-group">
+			<span class="close-btn"><i class="fa fa-close"></i></span>
+			<table id="clues">
+				<tbody>
+					<tr>
+						<td><h6>Across</h6><ul id="across"></ul></td>
+						<td><h6>Down</h6><ul id="down"></ul></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<!-- End - Clues Group -->
+		
+		<!-- Start - Puzzle Sticky Buttons -->
+		<div class="puzzle-btns">
+			<a href="#" class="btn clues-popup-trigger" data-modal="clues"><i class="fa fa-info"></i></a>
+			<a href="#" class="btn" onclick="location.reload()"><i class="fa fa-refresh"></i></a>
+		</div>
+		<!-- End - Puzzle Sticky Buttons -->
+		
+		<!-- Start - Virtual Keyboard -->
+		<div id="vkeyboard">
+			<h3>Enter the correct letter</h3>
+			<div id="kbtnlist"></div>
+			<button id="vkybrd-clsbtn"><i class="fa fa-times"></i> Close</button>
+			<button id="solveBtn"><i class="fa fa-eye"></i> Solve</button>
+		</div>
+		<!-- End - Virtual Keyboard -->
+	</div>
+
+</div>
+
+
+<div class="page-loader">
+	<img src="imgs/loader-icon.gif" alt="Loading...">
+</div>
+
+<script src="js/crossword.js"></script>
+<script src="js/ttss.js"></script>
+<script>
+	var appdata = {
+		maincolor : "2a797a",
+		qcount : 5,
+	}
+	
+	if(localStorage.getItem("ttsasyik") === null){
+		saveData()
+	}else{
+		appdata = JSON.parse(localStorage.getItem("ttsasyik"));
+	}
+	
+	function saveData(){
+		localStorage.setItem("ttsasyik", JSON.stringify(appdata))
+	}	
+	
+	function startttsgame(){
+
+		// words[i] correlates to clues[i]
+		var words = [];
+		var clues = [];
+		
+		for(var i = 0; i < appdata.qcount; i++){
+			var rn = genrandom(ttss.length-1)
+			var q = ttss[rn]
+			words.push(q.word)
+			clues.push(q.clue)
+			ttss.splice(rn,1)
+		}
+		
+		function genrandom(maxnum){
+			return Math.floor(Math.random() * maxnum)
+		}
+
+		// Create crossword object with the words and clues
+		var cw = new Crossword(words, clues);
+
+		// create the crossword grid (try to make it have a 1:1 width to height ratio in 10 tries)
+		var tries = 10; 
+		var grid = cw.getSquareGrid(tries);
+
+		// report a problem with the words in the crossword
+		if(grid == null){
+			var bad_words = cw.getBadWords();
+			var str = [];
+			for(var i = 0; i < bad_words.length; i++){
+				str.push(bad_words[i].word);
+			}
+			//alert("Shoot! A grid could not be created with these words:\n" + str.join("\n"));
+			location.reload()
+			return;
+		}
+
+		// turn the crossword grid into HTML
+		var show_answers = true;
+		document.getElementById("crossword").innerHTML = CrosswordUtils.toHtml(grid, show_answers);
+
+		// make a nice legend for the clues
+		var legend = cw.getLegend(grid);
+		addLegendToPage(legend);
+
+		function addLegendToPage(groups){
+			for(var k in groups){
+				var html = [];
+				for(var i = 0; i < groups[k].length; i++){
+					html.push("<li><strong>" + groups[k][i]['position'] + ".</strong> " + groups[k][i]['clue'] + "</li>");
+				}
+				document.getElementById(k).innerHTML = html.join("\n");
+			}
+		}
+	}
+
+	/**/
+	function setqcount(n){
+		appdata.qcount = n
+		saveData()
+		location.reload()
+	}
+	
+	function resetsettings(){
+		localStorage.clear()
+		location.reload()
+	}
+	
+	function tsep(x){
+		return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+	
+	function vtext(text){
+		var letters = /^[A-Za-z0-9]+$/;
+		if(text.match(letters)) return true;
+		else return false;
+	}
+
+	/****/
+	var canswershown = false;
+	function vkybrd_lttr() {
+		$('#vkeyboard').find('.kbtn').each(function(_, td) {  $(td).removeAttr('style');  })
+	}
+	function toggleAnswer(){
+		if(canswershown){
+			$(".canswer").hide()
+			$(".uanswer").show()
+			canswershown = false
+		}else{
+			$(".canswer").show()
+			$(".uanswer").hide()
+			canswershown = true
+		}
+
+	}
+	function activatetts(){
+		$("td").click(function(){
+			var _this = $(this);
+			if($(this).find(".canswer").html() != "&nbsp;" && $(this).find(".canswer").html() != undefined){
+				console.log("Clicked: " + $(this).find(".canswer").html())
+				console.log($(this).find(".uanswer").attr('id'))
+				selectedua = $(this).find(".uanswer").attr('id')
+				$("#vkeyboard").show()
+			}
+
+			/* Solve Button */
+			$('#solveBtn').click(function() {
+				var cans = $(_this).children('.canswer').text();
+				$('#vkeyboard').find('.kbtn').each(function(_, td) {
+					if ( cans == $(td).text() ) {  $(this).css('background-color', 'green');  }
+					else {  $(td).removeAttr('style');  }
+				});
+
+			});
+		})
+	}
+
+
+	$('#vkybrd-clsbtn').click(function() {
+		$('#vkeyboard').hide();
+		vkybrd_lttr();
+	});
+		
+
+	var selectedua = -1
+	function typechar(c){
+		$("#"+selectedua).html(c)
+		$("#vkeyboard").hide()
+		vkybrd_lttr();
+	}
+	
+	function initvkeyboard(){
+		var chars = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z",]
+		for(var i = 0; i < chars.length; i++){
+			$("#kbtnlist").append("<div class='kbtn' onclick=typechar('"+chars[i]+"')>"+chars[i]+"</div>")
+		}
+	}
+	
+	setTimeout(function(){
+		startttsgame()
+		activatetts()
+		initvkeyboard()
+		$("#crossword").css({ "width" : ($("tbody:eq(0)").find("tr:eq(0)").find("td").length * 32) + "px" })
+		$("#game").show()
+	},500)
+</script>
+<script type="text/javascript" src="js/script.js"></script>
+
+</body>
+</html>
