@@ -1,0 +1,824 @@
+body {
+	font-size:16px;padding:0;margin:0;
+}
+* { box-sizing:border-box; }
+
+/* Page Loader */
+.page-loader {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+    z-index: 9;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+    background-color: #ffffff;
+}
+.page-loader img {
+	width: 60px;
+	height: 60px;
+}
+
+
+/* Menu */
+.menu-trggr {
+	cursor: pointer;
+	display: block;
+	width: 40px;
+	height: 40px;
+	background-color: #1d8715;
+    position: absolute;
+    top: 0;
+    bottom: auto;
+    left: 0;
+    right: auto;
+    z-index: 5;
+}
+.menu-trggr > span,
+.menu-trggr > span:before,
+.menu-trggr > span:after {
+	width: 100%;
+	height: 2px;
+	background-color: #fff;
+    margin: 0 auto;
+}
+.menu-trggr > span {
+	display: block;
+	width: 65%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.menu-trggr > span:before,
+.menu-trggr > span:after {
+	content: "";
+	position: absolute;
+	top: auto;
+	bottom: auto;
+	left: 0;
+	right: 0;
+    transition: all 0.3s ease-in-out;
+}
+.menu-trggr > span:before {
+	top: -8px;
+}
+.menu-trggr > span:after {
+	bottom: -8px;
+}
+.menu-frp {
+    position: fixed;
+    top: 40px;
+    bottom: auto;
+    left: -100%;
+    right: auto;
+    width: 180px;
+    background-color: #fff;
+    padding: 10px 5px;
+    transition: all 0.3s ease-in-out;
+}
+.show-menu .menu-trggr > span {
+	background-color: transparent;
+}
+.show-menu .menu-trggr > span:before {
+    top: 50%;
+    transform: rotate(45deg);
+}
+.show-menu .menu-trggr > span:after {
+    top: 50%;
+    transform: rotate(-45deg);
+}
+.show-menu .menu-frp {
+	left: 0;
+}
+.menu-frp ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.menu-frp ul li > a {
+    display: block;
+    color: #333;
+    font-size: 18px;
+    line-height: 1.4;
+    letter-spacing: 0.7px;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    padding: 8px 10px;
+}
+.menu-frp ul li > a:hover {
+	background-color: #f5f5f5;
+}
+
+
+/* Game Starting Screen */
+.gamestrtng-screen {
+    width: 100%;
+    height: 100vh;
+	background-image: url('../imgs/startscreen-bg.jpg');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center bottom;
+    background-size: cover;
+    padding: 55px 0;
+    position: relative;
+}
+.gamestrtng-title {
+    padding: 15px 30px;
+    background-color: rgba(0, 0, 0, 0.25);
+	color: #ffffff;
+	text-align: center;
+	position: relative;
+	z-index: 1;
+}
+.gamestrtng-title h1 {
+    color: inherit !important;
+    font-family: serif;
+    font-size: 70px;
+    font-weight: bold;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Game Starting Pgae Buttons */
+.gamestrtng-btns-grp {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 0;
+}
+.gmstrtbtn {
+    position: absolute;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 115px;
+    height: 95px;
+    margin: 0 auto;
+	background-image: url('../imgs/unactive.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    overflow:hidden;
+}
+.gmstrtbtn.active {
+	background-image: url('../imgs/active.png');
+}
+.gmstrtbtn > a { display:block;width:100%;height:100%; }
+.gmstrtbtn > a > canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.gsbtn1 {
+    top: auto;
+    bottom: 95px;
+    right: -24%;
+}
+.gsbtn2 {
+    top: auto;
+    bottom: 340px;
+    left: -6%;
+}
+.gsbtn3 {
+    top: auto;
+    bottom: 530px;
+    right: -51%;
+}
+.gsbtn4 {
+    top: auto;
+    bottom: 615px;
+    left: -41%;
+}
+.gsbtn5 {
+    top: auto;
+    bottom: 750px;
+    right: -10%;
+}
+.gsbtn6 {
+    top: auto;
+    bottom: 980px;
+    left: -11%;
+}
+.gsbtn7 {
+    top: auto;
+    bottom: 1200px;
+    right: -8%;
+}
+.gsbtn8 {
+    top: auto;
+    bottom: 1400px;
+    left: -26%;
+    opacity: 0.2;
+}
+.gsbtn9 {
+    top: -3%;
+    bottom: auto;
+    left: 4%;
+    opacity: 0.1;
+}
+
+/* Unlocked Button */
+.gmstrtbtn.unlckd {
+    width: 170px;
+    height: 170px;
+    background-image: none;
+    background-color: #EB8D23;
+    border-radius: 100%;
+    border: 4px solid #3c2000;
+}
+.gmstrtbtn.unlckd > a {
+	color: #3c2000;
+	text-decoration: none;
+}
+.gmstrtbtn.unlckd > a:before {
+    content: "UNLOCKED";
+    color: inherit;
+    font-family: Arial;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gmstrtbtn.unlckd.qr {
+    width: 190px;
+    height: 200px;
+    box-shadow: 0px 0px 40px 16px #0D6F36;
+    border-radius: 0;
+    border: 0 none;
+    background-color: transparent;
+}
+.gmstrtbtn.unlckd.qr > a:before {
+	display: none;
+}
+
+
+/*====================================
+	Play Page
+  ====================================*/
+.gamestrtng-play {
+	position: relative;
+	overflow: hidden;
+	min-height: 100vh;
+	background-image: url('../imgs/playpage-bg.jpg');
+	background-repeat: no-repeat;
+	background-position: left bottom;
+	background-size: cover;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding: 10px;
+    width: 100%;
+    flex-direction: column;
+}
+#puzzle_container {
+    width: 350px;
+}
+#puzzle_container table {
+	width: 100%;
+}
+
+/* Puzzle Borad */
+.ttscontainer {
+	overflow: auto;
+	text-align: left;
+}			
+#crossword {
+    display: block;
+    text-align: left;
+    margin: 50px auto;
+}
+.crossword {
+	border-collapse:collapse;
+	font-family:"Courier New", Courier, monospace;
+	margin-top:10px;
+	margin-bottom:10px;
+}
+.crossword td {
+    background-repeat: no-repeat;
+	background-color: rgba(255, 255, 255, 0.7);
+	border:1px solid rgba(255, 255, 255, 0.3);
+	padding:0;
+	margin:0;
+	vertical-align:middle;
+	padding:0;
+	text-align:center;
+	width:40px;
+	height:40px;
+}
+.no-border, td.no-border{
+	background-color: transparent;
+}
+.crossword td.no-border {
+	border:none;
+}
+
+/* Close Button */
+.close-btn {
+	cursor: pointer;
+	color: #ffffff;
+	font-size: 16px;
+	line-height: normal;
+	background-color: #1d8715;
+	padding: 5px;
+}
+
+/* Clues Group  */
+.clues-group {
+    position: absolute;
+    top: 50%;
+    right: -100%;
+    bottom: auto;
+    left: auto;
+    z-index: 5;
+    background-color: #fff;
+    padding: 15px;
+    transition: all 0.3s ease-in-out;
+}
+.clues-group.active {
+	right: 0;
+}
+.clues-group .close-btn {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: auto;
+	left: auto;
+	z-index: 1;
+}
+.clues-group ul {
+    padding-left: 22px;
+}
+#clues {
+	color: #1d8715;
+    font-size: 14px;
+    line-height: 1.5;
+}
+#clues h6 {
+	color: #0e5d08;
+	font-size: 20px;
+	line-height: normal;
+	padding: 0;
+    margin: 0 0 5px;
+}
+#clues td {
+    display: block;
+	vertical-align:top;
+    margin: 0 auto 20px;
+}
+#clues td:last-child {
+	margin-bottom: 0;
+}
+.canswer{
+	display: none;
+}
+.gamestrtng-screen button, .gamestrtng-play button {
+	box-sizing: border-box;
+    width: auto;
+    min-width: 100px;
+    padding: 15px 15px;
+	border: none;
+	outline: none;
+	background-color: #1d8715;
+	color: white;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#vkeyboard{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(256,256,256,.85);
+	text-align: center;
+	display: none;
+	padding: 10px;
+	z-index: 13;
+}
+#kbtnlist {
+	padding: 10px 0 20px;
+	margin: 0 0 10px;
+}
+.kbtn{
+	padding: 10px;
+	border: 1px solid black;
+	margin: 5px; 
+	display: inline-block;
+	width: 30px;
+}
+.gamestrtng-screen th{
+	text-align: left;
+	font-weight: bold;
+}
+.gamestrtng-screen ul,
+.gamestrtng-screen li { 
+	margin:0;
+	margin-right: 5px;
+	padding:0;
+}
+#game{
+	margin-bottom: 10px;
+	padding: 10px;
+	display: none;
+}
+.ditem{
+	padding: 10px;
+	border-bottom: 1px solid black;
+	margin-bottom: 3px;
+}
+
+/* Puzzle Sticky Buttons */
+.puzzle-btns {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	bottom: auto;
+	left: auto;
+	transform: translateY(-50%);
+	z-index: 2;
+	width: 40px;
+	background-color: #1d8715;
+	border-radius: 5px 0px 0px 5px;
+}
+.puzzle-btns > a {
+	display: block;
+	width: 100%;
+	color: #fff;
+	font-size: 20px;
+	line-height: normal;
+	text-decoration: none;
+	text-align: center;
+    padding: 7px 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    transition: all 0.3s ease-in-out;
+}
+.puzzle-btns > a:last-child {
+	border-bottom: 0 none;
+}
+.puzzle-btns > a > i {
+	font-size: inherit;
+}
+.puzzle-btns > a:hover {
+	background-color: rgba(255, 255, 255, 0.25);
+}
+.button {
+	cursor: pointer;
+	padding: 5px 10px;
+	background-color: #ffffff;
+	color: #000000;
+}
+
+
+
+/*====================================
+	Instruction Page
+  ====================================*/
+.gamestrtng-instruction {
+    padding: 50px 20px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.gamestrtng-fnlscreen {
+	text-align: center;
+}
+.gamestrtng-fnlscreen .btns-group {
+	justify-content: center;
+}
+.instruction-content {
+    font-family: "arial", sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.instruction-content h3 {
+	font-size: 25px;
+	line-height: 1.4;
+    text-align: center;
+}
+.instruction-content ul, .instruction-content ol {
+	list-style-position: inside;
+	margin: 20px 0;
+	padding: 0;
+}
+.instruction-content li {
+	margin: 0 0 10px;
+}
+.instruction-content li:last-child {
+	margin-bottom: 0;
+}
+.instruction-content .btns-group {
+    display: flex;
+    align-items: center;
+    padding-top: 45px;
+}
+.instruction-content .btns-group > a {
+    display: block;
+    padding: 12px 22px;
+    margin: 5px 10px;
+    width: 50%;
+    text-align: center;
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    border: 1px solid #000;
+    border-radius: 5px;
+    transition: all 0.5s ease-in-out;
+}
+.instruction-content .btns-group > a:hover {
+	background-color: #ddd;
+}
+.lightgray-bg {
+	background-color: #eee;
+}
+
+
+
+
+
+
+
+/*=====================================
+		MEDTA QUERIES
+  =====================================*/
+
+
+@media all and (min-width: 768px) {
+
+	/* Game Starting Screen Buttons */
+	.gsbtn1 {
+	    top: auto;
+	    bottom: 0;
+	    right: -6%;
+	}
+	.gsbtn2 {
+	    top: auto;
+	    bottom: 160px;
+	    right: -29%;
+	}
+	.gsbtn3 {
+	    top: auto;
+	    bottom: 280px;
+	    left: -51%;
+	}
+	.gsbtn4 {
+	    top: auto;
+	    bottom: 395px;
+	    left: -30%;
+	}
+	.gsbtn5 {
+	    top: auto;
+	    bottom: 570px;
+	    left: -35%;
+	}
+	.gsbtn6 {
+	    top: auto;
+	    bottom: 660px;
+	    left: -48%;
+	}
+	.gsbtn7 {
+	    top: auto;
+	    bottom: 740px;
+	    left: -80%;
+	}
+
+}
+
+@media all and (min-width: 1281px) {
+
+	/* Game Starting Screen */
+	.gamestrtng-screen {
+		background-size: 100vw 100vh;
+	}
+
+}
+
+
+/* Laptop View and Ipad View */
+@media all and (max-width: 1280px) {
+
+	/* Game Starting Screen Unlocked Button */
+	.gmstrtbtn.unlckd, .gmstrtbtn.unlckd.qr {
+	    width: 130px;
+	    height: 130px;
+	}
+	.gmstrtbtn.unlckd > a:before {
+		font-size: 16px;
+	}
+
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+
+	/* Game Starting Screen Buttons */
+	.gmstrtbtn {
+	    width: 79px;
+	    height: 65px;
+	}
+
+}
+
+
+/* Landscape mobile verson */
+@media all and (max-width: 767px) {
+
+	/* Game Starting Screen */
+	.gamestrtng-screen {
+    	min-height: 761px;
+    	padding: 45px 0;
+	}
+
+	/* Game Starting Screen Title */
+	.gamestrtng-title {
+	    padding: 10px 30px;
+	}
+	.gamestrtng-title h1 {
+		font-size: 50px;
+	}
+
+	/* Game Starting Screen Buttons */
+	.gmstrtbtn {
+	    width: 80px;
+	    height: 65px;
+	}
+	.gsbtn1 {
+	    bottom: 0;
+	    right: -7%;
+	}
+	.gsbtn2 {
+	    bottom: 16%;
+	    right: -54%;
+	}
+	.gsbtn3 {
+	    top: auto;
+	    bottom: 30%;
+	    left: -54%;
+	}
+	.gsbtn4 {
+	    bottom: 39%;
+	    left: -51%;
+	}
+	.gsbtn5 {
+	    bottom: 53%;
+	    left: -35%;
+	}
+	.gsbtn6 {
+	    bottom: 63%;
+	    left: -51%;
+	}
+	.gsbtn7 {
+	    bottom: 70%;
+	    right: 81%;
+	}
+
+	/* Puzzle Sticky Buttons */
+	.puzzle-btns {
+		top: auto;
+		bottom: 5%;
+		transform: none;
+	}
+
+	/* Clue Group */
+	.clues-group {
+		top: auto;
+		bottom: 2%;
+		max-width: 180px;
+	}
+
+}
+
+
+/* min mobile verson */
+@media all and (max-width: 480px) {
+
+	/* Game Starting Screen */
+	.gamestrtng-screen {
+	    min-height: 100vh;
+	    padding: 25px 0;
+	}
+
+	/* Game Starting Screen Title */
+	.gamestrtng-title {
+	    padding: 10px 15px;
+	}
+	.gamestrtng-title h1 {
+	    font-size: 40px;
+	}
+
+	/* Game Starting Screen Buttons */
+	.gmstrtbtn {
+	    width: 65px;
+	    height: 50px;
+	}
+	.gmstrtbtn.unlckd, .gmstrtbtn.unlckd.qr {
+	    width: 105px;
+	    height: 105px;
+	}
+	.gsbtn1 {
+	    right: 0;
+	}
+	.gsbtn2 {
+	    bottom: 15%;
+	    right: -77%;
+	}
+	.gsbtn3 {
+	    right: -57%;
+	}
+	.gsbtn4 {
+	    bottom: 42%;
+	    left: -65%;
+	}
+	.gsbtn5 {
+	    bottom: 52%;
+	    left: -30%;
+	}
+	.gsbtn6 {
+	    bottom: 63%;
+	    left: -20%;
+	}
+	.gsbtn7 {
+	    bottom: 71%;
+	    right: 75%;
+	}
+
+	/* Game Starting Screen Unlocked Button */
+	.gmstrtbtn.unlckd > a:before {
+	    font-size: 14px;
+	}
+
+	/* Crossword Fields */
+	.crossword td {
+	    width: 30px;
+	    height: 30px;
+	}
+
+	/* Puzzle Sticky Buttons */
+	.puzzle-btns {
+    	width: 30px;
+	}
+	.puzzle-btns > a {
+	    font-size: 16px;
+	}
+
+}
+
+@media all and (max-width: 375px) {
+
+	/* Game Starting Screen Buttons */
+	.gmstrtbtn {
+	    width: 49px;
+	    height: 40px;
+	}
+	.gsbtn3 {
+	    bottom: 27%;
+	    right: -57%;
+	}
+	.gsbtn4 {
+	    bottom: 40%;
+	    left: -65%;
+	}
+	.gsbtn5 {
+	    bottom: 50%;
+	    left: -30%;
+	}
+	.gsbtn6 {
+	    bottom: 62%;
+	}
+
+	/* Game Starting Screen Unlocked Button */
+	.gmstrtbtn.unlckd, .gmstrtbtn.unlckd.qr {
+	    width: 85px;
+	    height: 85px;
+	}
+	.gmstrtbtn.unlckd > a:before {
+	    font-size: 12px;
+	}
+
+}
