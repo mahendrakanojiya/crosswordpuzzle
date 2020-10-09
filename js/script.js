@@ -30,7 +30,24 @@ $(document).ready(function() {
 
 
 	/* Submit Button */
+	$('#checkBtn').click(function() {
+		$('.crossword td').each(function() {
+			let cans = $(this).children('.canswer').text();
+			let myans = $(this).children('.uanswer').text();
+			let crrct = cans == myans;
+			if ( crrct ) {
+				$(this).addClass('success').css('background-color', 'green');
+			}
+			else {
+				$('.crossword td[class=""]').css('background-color', 'red');
+			}
+		});
+	});
+	var puzzlescore = '';
 	$('#submitBtn').click(function() {
+		if( parseInt($('.crntpuzzle-coin .num').html()) > 0 ) {
+			sessionStorage.setItem('puzzleScroe', parseInt($('.crntpuzzle-coin .num').html()));
+		}
 		$('.crossword td').each(function() {
 			let cans = $(this).children('.canswer').text();
 			let myans = $(this).children('.uanswer').text();
@@ -42,18 +59,19 @@ $(document).ready(function() {
 				if ( avlfld == cmptfld ) {
 					setTimeout(function() {    window.location.href = "finalscreen.html";    }, 250);
 				}
-			}
-			else {
-				$('.crossword td[class=""]').css('background-color', 'red');
-			}
+			} 
+			else {  $('.crossword td[class=""]').css('background-color', 'red');  }
 		});
 	});
+	if( location.pathname.substring(location.pathname.lastIndexOf("/") + 1) === "finalscreen.html" ) {
+		$('.gamestrtng-fnlscreen .prntscre').prepend( sessionStorage['puzzleScroe'] );
+	}
+	$('.gamestrtng-fnlscreen .instruction-content .btns-group > a').click(function() {  sessionStorage.removeItem('puzzleScroe');  });
 
 	/* Clear All Button */
 	$('#clearAll').click(function() {
 		$('.crossword td').each(function(ss, ww) {
 			$(this).children('.uanswer').html('');
-			console.log( $(this).prop('style') );
 			ww.style.removeProperty('background-color');
 		});
 	});
