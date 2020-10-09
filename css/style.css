@@ -559,6 +559,34 @@ body {
 	background-color: #eee;
 }
 
+/* Current Puzzle Coin  */
+.crntpuzzle-coin {
+	color: #A1CC63;
+	font-weight: bold;
+	text-align: center;
+	background-color: #1d8715;
+	border: 2px solid #1d8715;
+	border-radius: 5px 0 0 5px;
+	padding: 5px;
+	position: absolute;
+	top: 30%;
+	left: auto;
+	right: 0;
+	z-index: 2;
+    width: 40px;
+}
+.crntpuzzle-coin i.fa {
+	color: #ffffff;
+	font-size: 18px;
+	line-height: 1.2;
+}
+
+
+
+
+
+
+
 
 
 
@@ -701,7 +729,7 @@ body {
 	/* Puzzle Sticky Buttons */
 	.puzzle-btns {
 		top: auto;
-		bottom: 5%;
+		bottom: 10%;
 		transform: none;
 	}
 
@@ -710,6 +738,11 @@ body {
 		top: auto;
 		bottom: 2%;
 		max-width: 180px;
+	}
+
+	/* Score */
+	.crntpuzzle-coin {
+		top: 50%;
 	}
 
 }
@@ -732,7 +765,17 @@ body {
 	    font-size: 40px;
 	}
 
+	/* puzzle board */
+	#game {
+	    width: 86%;
+	    text-align: center;
+	}
+
 	/* Game Starting Screen Buttons */
+	.gamestrtng-screen button, .gamestrtng-play button {
+	    min-width: 70px;
+	    padding: 10px 10px;
+	}
 	.gmstrtbtn {
 	    width: 65px;
 	    height: 50px;
