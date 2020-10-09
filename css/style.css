@@ -370,7 +370,9 @@ body {
 	z-index: 1;
 }
 .clues-group ul {
-    padding-left: 22px;
+    padding-left: 16px;
+    list-style: none;
+    text-align: left;
 }
 #clues {
 	color: #1d8715;
