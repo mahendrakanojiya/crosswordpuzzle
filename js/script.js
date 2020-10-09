@@ -43,7 +43,6 @@ $(document).ready(function() {
 			}
 		});
 	});
-	var puzzlescore = '';
 	$('#submitBtn').click(function() {
 		if( parseInt($('.crntpuzzle-coin .num').html()) > 0 ) {
 			sessionStorage.setItem('puzzleScroe', parseInt($('.crntpuzzle-coin .num').html()));
@@ -86,6 +85,7 @@ $(document).ready(function() {
 				$(this).children('.uanswer').html('');
 				ww.style.removeProperty('background-color');
 			}
+			else { $(this).addClass('success').css('background-color', 'green'); }
 		});
 	});
 
