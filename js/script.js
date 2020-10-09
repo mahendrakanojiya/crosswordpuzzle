@@ -72,6 +72,7 @@ $(document).ready(function() {
 		$('.crossword td').each(function(ss, ww) {
 			$(this).children('.uanswer').html('');
 			ww.style.removeProperty('background-color');
+			$('.crntpuzzle-coin .num').html('0');
 		});
 	});
 	
