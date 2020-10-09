@@ -42,6 +42,7 @@
 
 		<button class="btn" id="clearAll">Clear All</button>
 		<button class="btn" id="clearError">Clear Errors</button>
+		<button class="btn" id="checkBtn">Check</button>
 		<button class="btn" id="submitBtn">Submit</button>
 
 
@@ -75,6 +76,8 @@
 		</div>
 		<!-- End - Virtual Keyboard -->
 	</div>
+
+	<div class="crntpuzzle-coin"><i class="fa fa-diamond" aria-hidden="true"></i><span class="num">0</span></div>
 
 </div>
 
@@ -184,26 +187,13 @@
 	function vkybrd_lttr() {
 		$('#vkeyboard').find('.kbtn').each(function(_, td) {  $(td).removeAttr('style');  })
 	}
-	function toggleAnswer(){
-		if(canswershown){
-			$(".canswer").hide()
-			$(".uanswer").show()
-			canswershown = false
-		}else{
-			$(".canswer").show()
-			$(".uanswer").hide()
-			canswershown = true
-		}
-
-	}
 	function activatetts(){
 		$("td").click(function(){
 			var _this = $(this);
 			if($(this).find(".canswer").html() != "&nbsp;" && $(this).find(".canswer").html() != undefined){
-				console.log("Clicked: " + $(this).find(".canswer").html())
-				console.log($(this).find(".uanswer").attr('id'))
-				selectedua = $(this).find(".uanswer").attr('id')
-				$("#vkeyboard").show()
+				selectedua = $(this).find(".uanswer").attr('id');
+				$("#vkeyboard").show();
+
 			}
 
 			/* Solve Button */
@@ -230,6 +220,9 @@
 		$("#"+selectedua).html(c)
 		$("#vkeyboard").hide()
 		vkybrd_lttr();
+		if( c == $("#"+selectedua).prev('.canswer').html() ) {
+			$('.crntpuzzle-coin .num').html( parseInt($('.crntpuzzle-coin .num').html()) + 1 );
+		}
 	}
 	
 	function initvkeyboard(){
